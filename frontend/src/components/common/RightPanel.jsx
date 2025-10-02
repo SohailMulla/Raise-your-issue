@@ -68,7 +68,7 @@ const RightPanel = () => {
         >
           <input
             type="text"
-            className="grow "
+            className="grow"
             placeholder="Search"
             value={searchQuery}
             onChange={handleInputChange}
@@ -91,7 +91,7 @@ const RightPanel = () => {
           >
             {top5Users &&
               top5Users.map((user) => (
-                <li>
+                <li key={user._id || user.username}>
                   <Link
                     to={`/profile/${user.username}`}
                     className="mt-auto mb-3 flex gap-2 items-start transition-all duration-300 hover:bg-[#181818] py-2 px-4 rounded-lg"
@@ -100,6 +100,7 @@ const RightPanel = () => {
                       <div className="w-8 rounded-full">
                         <img
                           src={user?.profileImg || "/avatar-placeholder.png"}
+                          alt={user?.fullName}
                         />
                       </div>
                     </div>
@@ -117,29 +118,33 @@ const RightPanel = () => {
           </ul>
         </label>
       </div>
-      <div className="bg-[#16181C] p-4 rounded-md sticky top-24 ">
+
+      <div className="bg-[#16181C] p-4 rounded-md sticky top-24">
         <p className="font-bold">Who to follow</p>
         <div className="flex flex-col gap-4">
-          {/* item */}
           {isLoading && (
             <>
-              <RightPanelSkeleton />
-              <RightPanelSkeleton />
-              <RightPanelSkeleton />
-              <RightPanelSkeleton />
+              <RightPanelSkeleton key="skeleton1" />
+              <RightPanelSkeleton key="skeleton2" />
+              <RightPanelSkeleton key="skeleton3" />
+              <RightPanelSkeleton key="skeleton4" />
             </>
           )}
+
           {!isLoading &&
             suggestedUsers?.map((user) => (
               <Link
                 to={`/profile/${user.username}`}
                 className="flex items-center justify-between gap-4"
-                key={user._id}
+                key={user._id || user.username}
               >
                 <div className="flex gap-2 items-center">
                   <div className="avatar">
                     <div className="w-8 rounded-full">
-                      <img src={user.profileImg || "/avatar-placeholder.png"} />
+                      <img
+                        src={user.profileImg || "/avatar-placeholder.png"}
+                        alt={user.fullName}
+                      />
                     </div>
                   </div>
                   <div className="flex flex-col">
@@ -169,4 +174,5 @@ const RightPanel = () => {
     </div>
   );
 };
+
 export default RightPanel;

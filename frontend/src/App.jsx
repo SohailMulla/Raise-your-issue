@@ -13,6 +13,7 @@ import { Toaster } from "react-hot-toast";
 import { useQuery } from "@tanstack/react-query";
 import LoadingSpinner from "./components/common/LoadingSpinner";
 
+
 function App(props) {
   //we use querykey to give a unique name to our query and refer to it later
   const { data: authUser, isLoading } = useQuery({
